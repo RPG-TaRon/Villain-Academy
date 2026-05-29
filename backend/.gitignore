@@ -1,0 +1,3 @@
+.env
+PORT=1313
+MONGODB_URI=mongodb+srv://TaRonAdmin:SuperVillain123@cluster0.dnvuqro.mongodb.net/villainAcademyDB?retryWrites=true&w=majority&appName=Cluster0
