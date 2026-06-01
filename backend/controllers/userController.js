@@ -1,0 +1,78 @@
+const jwt = require("jsonwebtoken");
+const { User } = require("../models");
+
+const createToken = (user) => {
+  return jwt.sign(
+    { id: user._id, username: user.username, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+};
+
+const registerUser = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    const user = await User.create({
+      username,
+      email,
+      password,
+    });
+
+    const token = createToken(user);
+
+    res.status(201).json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({ message: "Registration failed", error: err.message });
+  }
+};
+
+const loginUser = async (req, res) => {
+  try {
+    const { login, password } = req.body;
+
+    const user = await User.findOne({
+      $or: [{ email: login }, { username: login }],
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid login credentials" });
+    }
+
+    const correctPassword = await user.isCorrectPassword(password);
+
+    if (!correctPassword) {
+      return res.status(400).json({ message: "Invalid login credentials" });
+    }
+
+    const token = createToken(user);
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Login failed", error: err.message });
+  }
+};
+
+const getMe = async (req, res) => {
+  res.json(req.user);
+};
+
+module.exports = {
+  registerUser,
+  loginUser,
+  getMe,
+};
