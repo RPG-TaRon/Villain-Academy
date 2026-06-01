@@ -1,7 +1,11 @@
 const router = require("express").Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Class routes working" });
-});
+const {
+  createClass,
+} = require("../controllers/classController");
+
+const authMiddleware = require("../middleware/authMiddleware");
+
+router.post("/", authMiddleware, createClass);
 
 module.exports = router;
