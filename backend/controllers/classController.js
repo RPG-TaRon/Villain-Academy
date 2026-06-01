@@ -54,8 +54,41 @@ const getClassById = async (req, res) => {
   }
 };
 
+const updateClass = async (req, res) => {
+  try {
+    const updatedClass = await Class.findOneAndUpdate(
+      {
+        _id: req.params.id,
+        instructor: req.user._id,
+      },
+      {
+        name: req.body.name,
+        description: req.body.description,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    if (!updatedClass) {
+      return res.status(404).json({
+        message: "Class not found",
+      });
+    }
+
+    res.json(updatedClass);
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to update class",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createClass,
   getClasses,
   getClassById,
+  updateClass,
 };
