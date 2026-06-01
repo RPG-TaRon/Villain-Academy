@@ -86,9 +86,34 @@ const updateClass = async (req, res) => {
   }
 };
 
+const deleteClass = async (req, res) => {
+  try {
+    const deletedClass = await Class.findOneAndDelete({
+      _id: req.params.id,
+      instructor: req.user._id,
+    });
+
+    if (!deletedClass) {
+      return res.status(404).json({
+        message: "Class not found",
+      });
+    }
+
+    res.json({
+      message: "Class deleted successfully",
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to delete class",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createClass,
   getClasses,
   getClassById,
   updateClass,
+  deleteClass,
 };
