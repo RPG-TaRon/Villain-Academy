@@ -17,6 +17,22 @@ const createClass = async (req, res) => {
   }
 };
 
+const getClasses = async (req, res) => {
+  try {
+    const classes = await Class.find({
+      instructor: req.user._id,
+    });
+
+    res.json(classes);
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to fetch classes",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createClass,
+  getClasses,
 };
