@@ -32,7 +32,30 @@ const getClasses = async (req, res) => {
   }
 };
 
+const getClassById = async (req, res) => {
+  try {
+    const foundClass = await Class.findOne({
+      _id: req.params.id,
+      instructor: req.user._id,
+    });
+
+    if (!foundClass) {
+      return res.status(404).json({
+        message: "Class not found",
+      });
+    }
+
+    res.json(foundClass);
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to fetch class",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createClass,
   getClasses,
+  getClassById,
 };
