@@ -51,7 +51,48 @@ const getAssignmentsByClass = async (req, res) => {
   }
 };
 
+const updateAssignment = async (req, res) => {
+  try {
+    const foundClass = await Class.findOne({
+      _id: req.params.classId,
+      instructor: req.user._id,
+    });
+
+    if (!foundClass) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+    const updatedAssignment = await Assignment.findOneAndUpdate(
+      {
+        _id: req.params.assignmentId,
+        class: req.params.classId,
+      },
+      {
+        title: req.body.title,
+        description: req.body.description,
+        status: req.body.status,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedAssignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    res.json(updatedAssignment);
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to update assignment",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createAssignment,
   getAssignmentsByClass,
+  updateAssignment,
 };
