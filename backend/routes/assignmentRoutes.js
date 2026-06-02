@@ -5,6 +5,7 @@ const {
   createAssignment,
   getAssignmentsByClass,
   updateAssignment,
+  deleteAssignment,
 } = require("../controllers/assignmentController");
 
 router.post("/class/:classId", authMiddleware, createAssignment);
@@ -15,6 +16,12 @@ router.put(
   "/class/:classId/:assignmentId",
   authMiddleware,
   updateAssignment
+);
+
+router.delete(
+  "/class/:classId/:assignmentId",
+  authMiddleware,
+  deleteAssignment
 );
 
 module.exports = router;
