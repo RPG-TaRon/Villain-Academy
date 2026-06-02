@@ -1,11 +1,19 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import ClassDetails from "./pages/ClassDetails";
 
 function App() {
   return (
-    <main>
-      <h1>Villain Academy</h1>
-      <p>Welcome to the Univerese of Villains.</p>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/classes/:id" element={<ClassDetails />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
