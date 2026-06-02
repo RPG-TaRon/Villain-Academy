@@ -1,22 +1,20 @@
 const router = require("express").Router();
+const authMiddleware = require("../middleware/authMiddleware");
 
 const {
   createAssignment,
   getAssignmentsByClass,
+  updateAssignment,
 } = require("../controllers/assignmentController");
 
-const authMiddleware = require("../middleware/authMiddleware");
+router.post("/class/:classId", authMiddleware, createAssignment);
 
-router.post(
-  "/class/:classId",
-  authMiddleware,
-  createAssignment
-);
+router.get("/class/:classId", authMiddleware, getAssignmentsByClass);
 
-router.get(
-  "/class/:classId",
+router.put(
+  "/class/:classId/:assignmentId",
   authMiddleware,
-  getAssignmentsByClass
+  updateAssignment
 );
 
 module.exports = router;
