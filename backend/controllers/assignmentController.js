@@ -91,8 +91,38 @@ const updateAssignment = async (req, res) => {
   }
 };
 
+const deleteAssignment = async (req, res) => {
+  try {
+    const foundClass = await Class.findOne({
+      _id: req.params.classId,
+      instructor: req.user._id,
+    });
+
+    if (!foundClass) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+    const deletedAssignment = await Assignment.findOneAndDelete({
+      _id: req.params.assignmentId,
+      class: req.params.classId,
+    });
+
+    if (!deletedAssignment) {
+      return res.status(404).json({ message: "Assignment not found" });
+    }
+
+    res.json({ message: "Assignment deleted successfully" });
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to delete assignment",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createAssignment,
   getAssignmentsByClass,
   updateAssignment,
+  deleteAssignment,
 };
