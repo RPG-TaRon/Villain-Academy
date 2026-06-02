@@ -27,6 +27,31 @@ const createAssignment = async (req, res) => {
   }
 };
 
+const getAssignmentsByClass = async (req, res) => {
+  try {
+    const foundClass = await Class.findOne({
+      _id: req.params.classId,
+      instructor: req.user._id,
+    });
+
+    if (!foundClass) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+
+    const assignments = await Assignment.find({
+      class: req.params.classId,
+    });
+
+    res.json(assignments);
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to fetch assignments",
+      error: err.message,
+    });
+  }
+};
+
 module.exports = {
   createAssignment,
+  getAssignmentsByClass,
 };
