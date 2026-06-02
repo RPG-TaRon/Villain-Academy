@@ -72,7 +72,7 @@ function Register() {
       {error && <p>{error}</p>}
 
       <p>
-         Already a Villain in training? <Link to="/">Login here</Link>
+         Already a Villain in training? <Link to="/">Login</Link>
       </p>
     </main>
   );
