@@ -1,7 +1,15 @@
 const router = require("express").Router();
 
-router.get("/", (req, res) => {
-  res.json({ message: "Assignment routes working" });
-});
+const {
+  createAssignment,
+} = require("../controllers/assignmentController");
+
+const authMiddleware = require("../middleware/authMiddleware");
+
+router.post(
+  "/class/:classId",
+  authMiddleware,
+  createAssignment
+);
 
 module.exports = router;
