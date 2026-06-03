@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import AssignmentCard from "../components/AssignmentCard";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
 
@@ -101,7 +102,9 @@ function ClassDetails() {
         )
       );
     } catch {
-      setError("The status ritual failed. Someone fed the goblin after midnight.");
+      setError(
+        "The status ritual failed. Someone fed the goblin after midnight."
+      );
     }
   };
 
@@ -191,29 +194,12 @@ function ClassDetails() {
             <p>No assignments yet. Lazy villain behavior detected.</p>
           ) : (
             assignments.map((assignment) => (
-              <div key={assignment._id}>
-                <h3>{assignment.title}</h3>
-
-                <p>{assignment.description}</p>
-
-                <p>Status: {assignment.status}</p>
-
-                <button
-                  onClick={() => updateAssignmentStatus(assignment, "advance")}
-                >
-                  Advance Villainy
-                </button>
-
-                <button
-                  onClick={() => updateAssignmentStatus(assignment, "demote")}
-                >
-                  Heroic Relapse
-                </button>
-
-                <button onClick={() => deleteAssignment(assignment._id)}>
-                  Fire This Assignment Into A Volcano
-                </button>
-              </div>
+              <AssignmentCard
+                key={assignment._id}
+                assignment={assignment}
+                updateAssignmentStatus={updateAssignmentStatus}
+                deleteAssignment={deleteAssignment}
+              />
             ))
           )}
         </>
