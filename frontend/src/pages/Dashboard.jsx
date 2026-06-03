@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ClassCard from "../components/ClassCard";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
@@ -53,7 +54,9 @@ function Dashboard() {
       });
     } catch {
       setError(
-        "The academy rejected your class proposal. Try being more evil."
+        user?.isAdmin
+          ? "The lesser database scribes failed you. Unacceptable."
+          : "The academy rejected your class proposal. Try being more evil."
       );
     }
   };
@@ -97,9 +100,7 @@ function Dashboard() {
         description: "",
       });
     } catch {
-      setError(
-        "The academy scribes failed to update this class. Embarrassing."
-      );
+      setError("The academy scribes failed to update this class. Embarrassing.");
     }
   };
 
@@ -133,19 +134,102 @@ function Dashboard() {
         setClasses(response.data);
         setLoading(false);
       } catch {
-        setError("The academy records exploded. Try again, evil scholar.");
+        setError(
+          user?.isAdmin
+            ? "The empire records failed to bow before you."
+            : "The academy records exploded. Try again, evil scholar."
+        );
         setLoading(false);
       }
     };
 
     fetchClasses();
-  }, [token]);
+  }, [token, user?.isAdmin]);
 
   if (loading) {
     return (
       <main>
-        <h1>Villain Dashboard</h1>
-        <p>Summoning academy records from the evil archives...</p>
+        <h1>
+          {user?.isAdmin
+            ? "Supreme Command Dashboard"
+            : "Villain Dashboard"}
+        </h1>
+        <p>
+          {user?.isAdmin
+            ? "Preparing your royal archive of superiority..."
+            : "Summoning academy records from the evil archives..."}
+        </p>
+      </main>
+    );
+  }
+
+  if (user?.isAdmin) {
+    return (
+      <main className="supreme-dashboard">
+        <section className="supreme-hero">
+          <h1>SUPER ULTRA MEGA SUPREME VILLAIN LORD</h1>
+
+          <h2>Welcome, {user?.username}</h2>
+
+          <p>
+            Your presence has improved the academy by an unreasonable amount.
+            The walls stand taller. The goblins are nervous. The lesser villains
+            have been reminded of their place.
+          </p>
+
+          <Link to="/supreme-villain-lord">
+            Enter The Throne Room
+          </Link>
+        </section>
+
+        <form onSubmit={createClass}>
+          <h3>Create a Royal Class Decree</h3>
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Name Your Superior Class"
+            value={formData.name}
+            onChange={handleChange}
+          />
+
+          <input
+            type="text"
+            name="description"
+            placeholder="Describe why this class deserves to exist beneath you"
+            value={formData.description}
+            onChange={handleChange}
+          />
+
+          <button type="submit">Declare This Class Into Existence</button>
+        </form>
+
+        <div>
+          <h3>Your Royal Class Collection</h3>
+
+          {error && <p>{error}</p>}
+
+          {classes.length === 0 ? (
+            <p>
+              No classes yet, Supreme One. Clearly the academy is waiting for
+              your brilliance before beginning.
+            </p>
+          ) : (
+            classes.map((classItem) => (
+              <ClassCard
+                key={classItem._id}
+                classItem={classItem}
+                editingClassId={editingClassId}
+                editFormData={editFormData}
+                handleEditChange={handleEditChange}
+                startEditing={startEditing}
+                updateClass={updateClass}
+                cancelEditing={cancelEditing}
+                deleteClass={deleteClass}
+              />
+            ))
+          )}
+        </div>
       </main>
     );
   }
