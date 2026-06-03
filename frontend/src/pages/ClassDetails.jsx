@@ -23,6 +23,34 @@ function ClassDetails() {
     });
   };
 
+  const createAssignment = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await api.post(
+        `/assignments/class/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setAssignments([...assignments, response.data]);
+
+      setFormData({
+        title: "",
+        description: "",
+        status: "Assigned",
+      });
+    } catch (err) {
+      setError(
+        "The assignment spell failed. The goblins deny involvement."
+      );
+    }
+  };
+
   useEffect(() => {
     const fetchClass = async () => {
       try {
@@ -34,11 +62,14 @@ function ClassDetails() {
 
         setClassInfo(response.data);
 
-        const assignmentResponse = await api.get(`/assignments/class/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const assignmentResponse = await api.get(
+          `/assignments/class/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         setAssignments(assignmentResponse.data);
       } catch (err) {
@@ -58,7 +89,7 @@ function ClassDetails() {
           <h1>{classInfo.name}</h1>
           <p>{classInfo.description}</p>
 
-          <form>
+          <form onSubmit={createAssignment}>
             <h2>Create Assignment of Doom</h2>
 
             <input
@@ -87,13 +118,17 @@ function ClassDetails() {
               <option value="Completed">Completed</option>
             </select>
 
-            <button type="submit">Summon Assignment</button>
+            <button type="submit">
+              Summon Assignment
+            </button>
           </form>
 
           <h2>Assignments of Doom</h2>
 
           {assignments.length === 0 ? (
-            <p>No assignments yet. Lazy villain behavior detected.</p>
+            <p>
+              No assignments yet. Lazy villain behavior detected.
+            </p>
           ) : (
             assignments.map((assignment) => (
               <div key={assignment._id}>
