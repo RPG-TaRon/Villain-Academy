@@ -9,6 +9,7 @@ function ClassDetails() {
 
   const [classInfo, setClassInfo] = useState(null);
   const [assignments, setAssignments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -106,6 +107,8 @@ function ClassDetails() {
 
   useEffect(() => {
     const fetchClass = async () => {
+      setLoading(true);
+
       try {
         const response = await api.get(`/classes/${id}`, {
           headers: {
@@ -122,13 +125,23 @@ function ClassDetails() {
         });
 
         setAssignments(assignmentResponse.data);
+        setLoading(false);
       } catch {
         setError("This class has vanished into the villain fog.");
+        setLoading(false);
       }
     };
 
     fetchClass();
   }, [id, token]);
+
+  if (loading) {
+    return (
+      <main>
+        <p>Unlocking forbidden class files...</p>
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -205,7 +218,7 @@ function ClassDetails() {
           )}
         </>
       ) : (
-        <p>Loading secret class files...</p>
+        <p>This class does not exist. The academy denies everything.</p>
       )}
     </main>
   );
