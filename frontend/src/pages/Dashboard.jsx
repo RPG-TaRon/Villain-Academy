@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import ClassCard from "../components/ClassCard";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
 
@@ -187,49 +187,17 @@ function Dashboard() {
           <p>You don't have classes, you fake Villain.</p>
         ) : (
           classes.map((classItem) => (
-            <div key={classItem._id}>
-              {editingClassId === classItem._id ? (
-                <>
-                  <input
-                    type="text"
-                    name="name"
-                    value={editFormData.name}
-                    onChange={handleEditChange}
-                  />
-
-                  <input
-                    type="text"
-                    name="description"
-                    value={editFormData.description}
-                    onChange={handleEditChange}
-                  />
-
-                  <button onClick={() => updateClass(classItem._id)}>
-                    Save Evil Changes
-                  </button>
-
-                  <button onClick={cancelEditing}>
-                    Cancel This Nonsense
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link to={`/classes/${classItem._id}`}>
-                    <h4>{classItem.name}</h4>
-                  </Link>
-
-                  <p>{classItem.description}</p>
-
-                  <button onClick={() => startEditing(classItem)}>
-                    Edit This Scheme
-                  </button>
-
-                  <button onClick={() => deleteClass(classItem._id)}>
-                    Expel This Class From The Academy
-                  </button>
-                </>
-              )}
-            </div>
+            <ClassCard
+              key={classItem._id}
+              classItem={classItem}
+              editingClassId={editingClassId}
+              editFormData={editFormData}
+              handleEditChange={handleEditChange}
+              startEditing={startEditing}
+              updateClass={updateClass}
+              cancelEditing={cancelEditing}
+              deleteClass={deleteClass}
+            />
           ))
         )}
       </div>
