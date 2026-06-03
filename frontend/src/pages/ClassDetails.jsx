@@ -9,7 +9,19 @@ function ClassDetails() {
 
   const [classInfo, setClassInfo] = useState(null);
   const [assignments, setAssignments] = useState([]);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    status: "Assigned",
+  });
   const [error, setError] = useState("");
+
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
   useEffect(() => {
     const fetchClass = async () => {
@@ -45,6 +57,38 @@ function ClassDetails() {
         <>
           <h1>{classInfo.name}</h1>
           <p>{classInfo.description}</p>
+
+          <form>
+            <h2>Create Assignment of Doom</h2>
+
+            <input
+              type="text"
+              name="title"
+              placeholder="Assignment Title"
+              value={formData.title}
+              onChange={handleChange}
+            />
+
+            <input
+              type="text"
+              name="description"
+              placeholder="Assignment Description"
+              value={formData.description}
+              onChange={handleChange}
+            />
+
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="Assigned">Assigned</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+
+            <button type="submit">Summon Assignment</button>
+          </form>
 
           <h2>Assignments of Doom</h2>
 
