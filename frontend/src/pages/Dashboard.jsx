@@ -36,7 +36,7 @@ function Dashboard() {
         name: "",
         description: "",
       });
-    } catch (err) {
+    } catch {
       setError(
         "The academy rejected your class proposal. Try being more evil.",
       );
@@ -53,7 +53,7 @@ function Dashboard() {
         });
 
         setClasses(response.data);
-      } catch (err) {
+      } catch {
         setError("The academy records exploded. Try again, evil scholar.");
       }
     };

@@ -44,9 +44,32 @@ function ClassDetails() {
         description: "",
         status: "Assigned",
       });
-    } catch (err) {
+    } catch {
       setError(
         "The assignment spell failed. The goblins deny involvement."
+      );
+    }
+  };
+
+  const deleteAssignment = async (assignmentId) => {
+    try {
+      await api.delete(
+        `/assignments/class/${id}/${assignmentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setAssignments(
+        assignments.filter(
+          (assignment) => assignment._id !== assignmentId
+        )
+      );
+    } catch {
+      setError(
+        "The volcano rejected your assignment. Suspicious."
       );
     }
   };
@@ -72,7 +95,7 @@ function ClassDetails() {
         );
 
         setAssignments(assignmentResponse.data);
-      } catch (err) {
+      } catch {
         setError("This class has vanished into the villain fog.");
       }
     };
@@ -87,6 +110,7 @@ function ClassDetails() {
       {classInfo ? (
         <>
           <h1>{classInfo.name}</h1>
+
           <p>{classInfo.description}</p>
 
           <form onSubmit={createAssignment}>
@@ -133,8 +157,18 @@ function ClassDetails() {
             assignments.map((assignment) => (
               <div key={assignment._id}>
                 <h3>{assignment.title}</h3>
+
                 <p>{assignment.description}</p>
+
                 <p>Status: {assignment.status}</p>
+
+                <button
+                  onClick={() =>
+                    deleteAssignment(assignment._id)
+                  }
+                >
+                  Fire This Assignment Into A Volcano
+                </button>
               </div>
             ))
           )}
