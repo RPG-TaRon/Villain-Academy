@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
-import { Link } from "react-router-dom";
 
 function Dashboard() {
   const { user, token } = useAuth();
@@ -38,7 +38,25 @@ function Dashboard() {
       });
     } catch {
       setError(
-        "The academy rejected your class proposal. Try being more evil.",
+        "The academy rejected your class proposal. Try being more evil."
+      );
+    }
+  };
+
+  const deleteClass = async (classId) => {
+    try {
+      await api.delete(`/classes/${classId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setClasses(
+        classes.filter((classItem) => classItem._id !== classId)
+      );
+    } catch {
+      setError(
+        "The academy refuses to destroy this classroom. Bureaucracy strikes again."
       );
     }
   };
@@ -54,7 +72,9 @@ function Dashboard() {
 
         setClasses(response.data);
       } catch {
-        setError("The academy records exploded. Try again, evil scholar.");
+        setError(
+          "The academy records exploded. Try again, evil scholar."
+        );
       }
     };
 
@@ -86,7 +106,9 @@ function Dashboard() {
           onChange={handleChange}
         />
 
-        <button type="submit">Create New Class</button>
+        <button type="submit">
+          Create New Class
+        </button>
       </form>
 
       <div>
@@ -104,6 +126,12 @@ function Dashboard() {
               </Link>
 
               <p>{classItem.description}</p>
+
+              <button
+                onClick={() => deleteClass(classItem._id)}
+              >
+                Expel This Class From The Academy
+              </button>
             </div>
           ))
         )}
