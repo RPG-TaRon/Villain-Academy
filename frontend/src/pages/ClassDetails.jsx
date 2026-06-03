@@ -8,6 +8,7 @@ function ClassDetails() {
   const { token } = useAuth();
 
   const [classInfo, setClassInfo] = useState(null);
+  const [assignments, setAssignments] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -20,6 +21,14 @@ function ClassDetails() {
         });
 
         setClassInfo(response.data);
+
+        const assignmentResponse = await api.get(`/assignments/class/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setAssignments(assignmentResponse.data);
       } catch (err) {
         setError("This class has vanished into the villain fog.");
       }
@@ -38,7 +47,18 @@ function ClassDetails() {
           <p>{classInfo.description}</p>
 
           <h2>Assignments of Doom</h2>
-          <p>No assignments yet. Lazy villain behavior detected.</p>
+
+          {assignments.length === 0 ? (
+            <p>No assignments yet. Lazy villain behavior detected.</p>
+          ) : (
+            assignments.map((assignment) => (
+              <div key={assignment._id}>
+                <h3>{assignment.title}</h3>
+                <p>{assignment.description}</p>
+                <p>Status: {assignment.status}</p>
+              </div>
+            ))
+          )}
         </>
       ) : (
         <p>Loading secret class files...</p>
