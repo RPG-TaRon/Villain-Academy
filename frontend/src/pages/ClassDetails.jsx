@@ -27,15 +27,11 @@ function ClassDetails() {
     event.preventDefault();
 
     try {
-      const response = await api.post(
-        `/assignments/class/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post(`/assignments/class/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setAssignments([...assignments, response.data]);
 
@@ -45,16 +41,52 @@ function ClassDetails() {
         status: "Assigned",
       });
     } catch {
-      setError(
-        "The assignment spell failed. The goblins deny involvement."
-      );
+      setError("The assignment spell failed. The goblins deny involvement.");
     }
   };
 
   const deleteAssignment = async (assignmentId) => {
     try {
-      await api.delete(
-        `/assignments/class/${id}/${assignmentId}`,
+      await api.delete(`/assignments/class/${id}/${assignmentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setAssignments(
+        assignments.filter((assignment) => assignment._id !== assignmentId)
+      );
+    } catch {
+      setError("The volcano rejected your assignment. Suspicious.");
+    }
+  };
+
+  const updateAssignmentStatus = async (assignment, direction) => {
+    const statuses = ["Assigned", "In Progress", "Completed"];
+    const currentIndex = statuses.indexOf(assignment.status);
+
+    let nextIndex = currentIndex;
+
+    if (direction === "advance" && currentIndex < statuses.length - 1) {
+      nextIndex = currentIndex + 1;
+    }
+
+    if (direction === "demote" && currentIndex > 0) {
+      nextIndex = currentIndex - 1;
+    }
+
+    if (nextIndex === currentIndex) {
+      return;
+    }
+
+    try {
+      const response = await api.put(
+        `/assignments/class/${id}/${assignment._id}`,
+        {
+          title: assignment.title,
+          description: assignment.description,
+          status: statuses[nextIndex],
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,14 +95,12 @@ function ClassDetails() {
       );
 
       setAssignments(
-        assignments.filter(
-          (assignment) => assignment._id !== assignmentId
+        assignments.map((item) =>
+          item._id === assignment._id ? response.data : item
         )
       );
     } catch {
-      setError(
-        "The volcano rejected your assignment. Suspicious."
-      );
+      setError("The status ritual failed. Someone fed the goblin after midnight.");
     }
   };
 
@@ -85,14 +115,11 @@ function ClassDetails() {
 
         setClassInfo(response.data);
 
-        const assignmentResponse = await api.get(
-          `/assignments/class/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const assignmentResponse = await api.get(`/assignments/class/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setAssignments(assignmentResponse.data);
       } catch {
@@ -142,17 +169,13 @@ function ClassDetails() {
               <option value="Completed">Completed</option>
             </select>
 
-            <button type="submit">
-              Summon Assignment
-            </button>
+            <button type="submit">Summon Assignment</button>
           </form>
 
           <h2>Assignments of Doom</h2>
 
           {assignments.length === 0 ? (
-            <p>
-              No assignments yet. Lazy villain behavior detected.
-            </p>
+            <p>No assignments yet. Lazy villain behavior detected.</p>
           ) : (
             assignments.map((assignment) => (
               <div key={assignment._id}>
@@ -163,10 +186,18 @@ function ClassDetails() {
                 <p>Status: {assignment.status}</p>
 
                 <button
-                  onClick={() =>
-                    deleteAssignment(assignment._id)
-                  }
+                  onClick={() => updateAssignmentStatus(assignment, "advance")}
                 >
+                  Advance Villainy
+                </button>
+
+                <button
+                  onClick={() => updateAssignmentStatus(assignment, "demote")}
+                >
+                  Heroic Relapse
+                </button>
+
+                <button onClick={() => deleteAssignment(assignment._id)}>
                   Fire This Assignment Into A Volcano
                 </button>
               </div>
