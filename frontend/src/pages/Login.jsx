@@ -44,7 +44,7 @@ function Login() {
         <input
           type="text"
           name="login"
-          placeholder="Username or Email"
+          placeholder="Villain Name or Email"
           value={formData.login}
           onChange={handleChange}
         />
@@ -57,13 +57,13 @@ function Login() {
           onChange={handleChange}
         />
 
-        <button type="submit">Enter the Academy</button>
+        <button type="submit">Enter the Villain Academy</button>
       </form>
 
       {error && <p>{error}</p>}
 
       <p>
-        Not enrolled? <Link to="/register">Join here</Link>
+        Your criminal record is empty? How pathetic.<Link to="/register">Join the ranks of the evil</Link>
       </p>
     </main>
   );

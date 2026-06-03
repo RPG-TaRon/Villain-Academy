@@ -9,7 +9,14 @@ function Dashboard() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [editingClassId, setEditingClassId] = useState(null);
+
   const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+  });
+
+  const [editFormData, setEditFormData] = useState({
     name: "",
     description: "",
   });
@@ -17,6 +24,13 @@ function Dashboard() {
   const handleChange = (event) => {
     setFormData({
       ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleEditChange = (event) => {
+    setEditFormData({
+      ...editFormData,
       [event.target.name]: event.target.value,
     });
   };
@@ -40,6 +54,51 @@ function Dashboard() {
     } catch {
       setError(
         "The academy rejected your class proposal. Try being more evil."
+      );
+    }
+  };
+
+  const startEditing = (classItem) => {
+    setEditingClassId(classItem._id);
+
+    setEditFormData({
+      name: classItem.name,
+      description: classItem.description,
+    });
+  };
+
+  const cancelEditing = () => {
+    setEditingClassId(null);
+
+    setEditFormData({
+      name: "",
+      description: "",
+    });
+  };
+
+  const updateClass = async (classId) => {
+    try {
+      const response = await api.put(`/classes/${classId}`, editFormData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setClasses(
+        classes.map((classItem) =>
+          classItem._id === classId ? response.data : classItem
+        )
+      );
+
+      setEditingClassId(null);
+
+      setEditFormData({
+        name: "",
+        description: "",
+      });
+    } catch {
+      setError(
+        "The academy scribes failed to update this class. Embarrassing."
       );
     }
   };
@@ -129,15 +188,47 @@ function Dashboard() {
         ) : (
           classes.map((classItem) => (
             <div key={classItem._id}>
-              <Link to={`/classes/${classItem._id}`}>
-                <h4>{classItem.name}</h4>
-              </Link>
+              {editingClassId === classItem._id ? (
+                <>
+                  <input
+                    type="text"
+                    name="name"
+                    value={editFormData.name}
+                    onChange={handleEditChange}
+                  />
 
-              <p>{classItem.description}</p>
+                  <input
+                    type="text"
+                    name="description"
+                    value={editFormData.description}
+                    onChange={handleEditChange}
+                  />
 
-              <button onClick={() => deleteClass(classItem._id)}>
-                Expel This Class From The Academy
-              </button>
+                  <button onClick={() => updateClass(classItem._id)}>
+                    Save Evil Changes
+                  </button>
+
+                  <button onClick={cancelEditing}>
+                    Cancel This Nonsense
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to={`/classes/${classItem._id}`}>
+                    <h4>{classItem.name}</h4>
+                  </Link>
+
+                  <p>{classItem.description}</p>
+
+                  <button onClick={() => startEditing(classItem)}>
+                    Edit This Scheme
+                  </button>
+
+                  <button onClick={() => deleteClass(classItem._id)}>
+                    Expel This Class From The Academy
+                  </button>
+                </>
+              )}
             </div>
           ))
         )}
