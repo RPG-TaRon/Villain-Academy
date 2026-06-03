@@ -7,6 +7,7 @@ function Dashboard() {
   const { user, token } = useAuth();
 
   const [classes, setClasses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -51,9 +52,7 @@ function Dashboard() {
         },
       });
 
-      setClasses(
-        classes.filter((classItem) => classItem._id !== classId)
-      );
+      setClasses(classes.filter((classItem) => classItem._id !== classId));
     } catch {
       setError(
         "The academy refuses to destroy this classroom. Bureaucracy strikes again."
@@ -63,6 +62,8 @@ function Dashboard() {
 
   useEffect(() => {
     const fetchClasses = async () => {
+      setLoading(true);
+
       try {
         const response = await api.get("/classes", {
           headers: {
@@ -71,15 +72,24 @@ function Dashboard() {
         });
 
         setClasses(response.data);
+        setLoading(false);
       } catch {
-        setError(
-          "The academy records exploded. Try again, evil scholar."
-        );
+        setError("The academy records exploded. Try again, evil scholar.");
+        setLoading(false);
       }
     };
 
     fetchClasses();
   }, [token]);
+
+  if (loading) {
+    return (
+      <main>
+        <h1>Villain Dashboard</h1>
+        <p>Summoning academy records from the evil archives...</p>
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -106,9 +116,7 @@ function Dashboard() {
           onChange={handleChange}
         />
 
-        <button type="submit">
-          Create New Class
-        </button>
+        <button type="submit">Create New Class</button>
       </form>
 
       <div>
@@ -127,9 +135,7 @@ function Dashboard() {
 
               <p>{classItem.description}</p>
 
-              <button
-                onClick={() => deleteClass(classItem._id)}
-              >
+              <button onClick={() => deleteClass(classItem._id)}>
                 Expel This Class From The Academy
               </button>
             </div>
