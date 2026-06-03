@@ -3,7 +3,12 @@ const { User } = require("../models");
 
 const createToken = (user) => {
   return jwt.sign(
-    { id: user._id, username: user.username, email: user.email },
+    {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );
@@ -27,10 +32,14 @@ const registerUser = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (err) {
-    res.status(400).json({ message: "Registration failed", error: err.message });
+    res.status(400).json({
+      message: "Registration failed",
+      error: err.message,
+    });
   }
 };
 
@@ -43,13 +52,17 @@ const loginUser = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid login credentials" });
+      return res.status(400).json({
+        message: "Invalid login credentials",
+      });
     }
 
     const correctPassword = await user.isCorrectPassword(password);
 
     if (!correctPassword) {
-      return res.status(400).json({ message: "Invalid login credentials" });
+      return res.status(400).json({
+        message: "Invalid login credentials",
+      });
     }
 
     const token = createToken(user);
@@ -60,10 +73,14 @@ const loginUser = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (err) {
-    res.status(500).json({ message: "Login failed", error: err.message });
+    res.status(500).json({
+      message: "Login failed",
+      error: err.message,
+    });
   }
 };
 
