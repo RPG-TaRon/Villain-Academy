@@ -1,23 +1,29 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const navigate = useNavigate();
   const { user, logout } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
 
   return (
     <nav>
-      <h2>Villain Academy</h2>
-
-      {user && (
+      {!user ? (
+        <>
+          <Link to="/">Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      ) : (
         <>
           <Link to="/dashboard">Dashboard</Link>
-          <button onClick={handleLogout}>Logout</button>
+
+          {user?.isAdmin && (
+            <Link to="/supreme-villain-lord">
+              👑 Enter The Throne Room my glorious King!
+            </Link>
+          )}
+
+          <button onClick={logout}>
+            Abandon Evil Plans
+          </button>
         </>
       )}
     </nav>
