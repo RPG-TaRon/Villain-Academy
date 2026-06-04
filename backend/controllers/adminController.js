@@ -28,7 +28,14 @@ const getAcademyData = async (req, res) => {
       };
     });
 
-    res.json(academyData);
+    res.json({
+      stats: {
+        totalVillains: users.length,
+        totalClasses: classes.length,
+        totalAssignments: assignments.length,
+      },
+      academyData,
+    });
   } catch {
     res.status(500).json({
       message: "Failed to summon academy records.",
