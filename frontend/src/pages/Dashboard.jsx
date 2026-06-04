@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import ClassCard from "../components/ClassCard";
 import { useAuth } from "../context/useAuth";
 import api from "../utils/api";
+import dashboardImage from "../Images/DashboardImage.png";
+import loginImage from "../Images/LoginImage.png";
 
 function Dashboard() {
   const { user, token } = useAuth();
@@ -165,7 +167,19 @@ function Dashboard() {
 
   if (user?.isAdmin) {
     return (
-      <main className="supreme-dashboard">
+      <main
+        className="supreme-dashboard"
+        style={{
+          backgroundImage: `linear-gradient(
+            rgba(0,0,0,0.65),
+            rgba(0,0,0,0.85)
+          ), url(${dashboardImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+        }}
+      >
         <section className="supreme-hero">
           <h1>SUPER ULTRA MEGA SUPREME VILLAIN LORD</h1>
 
@@ -177,9 +191,7 @@ function Dashboard() {
             have been reminded of their place.
           </p>
 
-          <Link to="/supreme-villain-lord">
-            Enter The Throne Room
-          </Link>
+          <Link to="/supreme-villain-lord">Enter The Throne Room</Link>
         </section>
 
         <form onSubmit={createClass}>
@@ -235,7 +247,18 @@ function Dashboard() {
   }
 
   return (
-    <main>
+    <main
+      style={{
+        backgroundImage: `linear-gradient(
+          rgba(0,0,0,0.7),
+          rgba(0,0,0,0.85)
+        ), url(${loginImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
+      }}
+    >
       <h1>Villain Dashboard</h1>
 
       <h2>Welcome, {user?.username}</h2>
