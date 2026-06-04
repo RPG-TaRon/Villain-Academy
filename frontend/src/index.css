@@ -146,6 +146,16 @@ button + button {
     0 0 80px rgba(120, 0, 0, 0.25);
 }
 
+.supreme-page {
+  width: 100%;
+  max-width: none;
+  min-height: calc(100vh - 68px);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 40px clamp(20px, 5vw, 70px);
+}
+
 .supreme-dashboard::before,
 .supreme-page::before {
   content: "👑";
