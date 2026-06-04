@@ -43,6 +43,61 @@ const getAcademyData = async (req, res) => {
   }
 };
 
+const deleteUserByAdmin = async (req, res) => {
+  try {
+    if (req.user._id.toString() === req.params.userId) {
+      return res.status(400).json({
+        message: "You cannot banish yourself, Supreme One.",
+      });
+    }
+
+    await Class.deleteMany({ instructor: req.params.userId });
+
+    await User.findByIdAndDelete(req.params.userId);
+
+    res.json({
+      message: "Villain and their classes have been banished.",
+    });
+  } catch {
+    res.status(500).json({
+      message: "Failed to banish villain.",
+    });
+  }
+};
+
+const deleteClassByAdmin = async (req, res) => {
+  try {
+    await Assignment.deleteMany({ class: req.params.classId });
+
+    await Class.findByIdAndDelete(req.params.classId);
+
+    res.json({
+      message: "Class and its assignments have been destroyed.",
+    });
+  } catch {
+    res.status(500).json({
+      message: "Failed to destroy class.",
+    });
+  }
+};
+
+const deleteAssignmentByAdmin = async (req, res) => {
+  try {
+    await Assignment.findByIdAndDelete(req.params.assignmentId);
+
+    res.json({
+      message: "Assignment erased from the royal records.",
+    });
+  } catch {
+    res.status(500).json({
+      message: "Failed to erase assignment.",
+    });
+  }
+};
+
 module.exports = {
   getAcademyData,
+  deleteUserByAdmin,
+  deleteClassByAdmin,
+  deleteAssignmentByAdmin,
 };
