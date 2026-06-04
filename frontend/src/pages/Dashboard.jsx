@@ -4,7 +4,7 @@ import ClassCard from "../components/ClassCard";
 import { useAuth } from "../context/useAuth";
 import api from "../utils/api";
 import dashboardImage from "../Images/DashboardImage.png";
-import loginImage from "../Images/LoginImage.png";
+import loginImage from "../Images/LogInImage.png";
 
 function Dashboard() {
   const { user, token } = useAuth();
