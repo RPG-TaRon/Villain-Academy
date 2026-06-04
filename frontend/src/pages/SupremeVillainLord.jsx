@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
+import throneImage from "../Images/ThroneImage.png";
 
 function SuperUltraMegaVillainLord() {
   const { token, user } = useAuth();
@@ -21,9 +22,7 @@ function SuperUltraMegaVillainLord() {
         setAcademyData(response.data);
         setLoading(false);
       } catch {
-        setError(
-          "The throne room rejected your authority. Unacceptable."
-        );
+        setError("The throne room rejected your authority. Unacceptable.");
         setLoading(false);
       }
     };
@@ -41,7 +40,18 @@ function SuperUltraMegaVillainLord() {
   }
 
   return (
-    <main className="supreme-page">
+    <main
+      className="supreme-page"
+      style={{
+        backgroundImage: `linear-gradient(
+      rgba(0,0,0,0.85),
+      rgba(0,0,0,0.92)
+    ), url(${throneImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
       <h1>SUPER ULTRA MEGA SUPREME VILLAIN LORD</h1>
 
       <h2>Welcome, {user?.username}</h2>
