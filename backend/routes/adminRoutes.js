@@ -2,6 +2,9 @@ const router = require("express").Router();
 
 const {
   getAcademyData,
+  updateUserByAdmin,
+  updateClassByAdmin,
+  updateAssignmentByAdmin,
   deleteUserByAdmin,
   deleteClassByAdmin,
   deleteAssignmentByAdmin,
@@ -11,6 +14,27 @@ const authMiddleware = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
 
 router.get("/academy", authMiddleware, adminMiddleware, getAcademyData);
+
+router.put(
+  "/users/:userId",
+  authMiddleware,
+  adminMiddleware,
+  updateUserByAdmin
+);
+
+router.put(
+  "/classes/:classId",
+  authMiddleware,
+  adminMiddleware,
+  updateClassByAdmin
+);
+
+router.put(
+  "/assignments/:assignmentId",
+  authMiddleware,
+  adminMiddleware,
+  updateAssignmentByAdmin
+);
 
 router.delete(
   "/users/:userId",
