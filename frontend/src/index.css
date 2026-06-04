@@ -126,26 +126,204 @@ button + button {
   margin-left: 8px;
 }
 
-@media (max-width: 768px) {
-  main {
-    padding: 15px;
-  }
+/* ==================================================
+   SUPREME ULTRA MEGA SUPREME VILLAIN LORD MODE
+================================================== */
 
-  nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.supreme-dashboard,
+.supreme-page {
+  position: relative;
+  background:
+    radial-gradient(circle at top,
+    rgba(120, 0, 0, 0.35) 0%,
+    rgba(40, 0, 0, 0.25) 20%,
+    #050505 65%);
+  border: 2px solid #fbbf24;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow:
+    0 0 30px rgba(251, 191, 36, 0.2),
+    0 0 80px rgba(120, 0, 0, 0.25);
+}
 
-  h1 {
-    font-size: 2rem;
-  }
+.supreme-dashboard::before,
+.supreme-page::before {
+  content: "👑";
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 4rem;
+  opacity: 0.15;
+}
 
-  button {
-    width: 100%;
-    margin-top: 8px;
-  }
+.supreme-dashboard h1,
+.supreme-page h1 {
+  color: #fbbf24;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow:
+    0 0 10px #fbbf24,
+    0 0 25px #fbbf24,
+    0 0 50px rgba(251, 191, 36, 0.4);
+}
 
-  button + button {
-    margin-left: 0;
-  }
+.supreme-dashboard h2,
+.supreme-page h2 {
+  color: #ffffff;
+  font-size: 2rem;
+}
+
+.supreme-dashboard h3,
+.supreme-page h3 {
+  color: #fbbf24;
+}
+
+.supreme-dashboard p,
+.supreme-page p {
+  color: #e5e5e5;
+}
+
+.supreme-hero {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(251, 191, 36, 0.12),
+      rgba(120, 0, 0, 0.15)
+    );
+
+  border: 2px solid #fbbf24;
+
+  border-radius: 20px;
+
+  padding: 40px;
+
+  margin-bottom: 35px;
+
+  text-align: center;
+
+  box-shadow:
+    0 0 20px rgba(251, 191, 36, 0.2),
+    0 0 60px rgba(120, 0, 0, 0.15);
+}
+
+.supreme-hero p {
+  font-size: 1.15rem;
+}
+
+.supreme-hero a {
+  display: inline-block;
+
+  margin-top: 25px;
+
+  background: linear-gradient(
+    135deg,
+    #fbbf24,
+    #fde68a
+  );
+
+  color: #111827;
+
+  padding: 14px 24px;
+
+  border-radius: 14px;
+
+  font-weight: bold;
+
+  box-shadow:
+    0 0 20px rgba(251, 191, 36, 0.4);
+}
+
+.supreme-hero a:hover {
+  transform: translateY(-3px);
+}
+
+.supreme-dashboard form,
+.supreme-page form {
+  background: rgba(15, 15, 15, 0.95);
+
+  border: 2px solid rgba(251, 191, 36, 0.35);
+
+  box-shadow:
+    0 0 25px rgba(251, 191, 36, 0.1);
+}
+
+.supreme-dashboard input,
+.supreme-dashboard select,
+.supreme-page input,
+.supreme-page select {
+  background: #0f0f0f;
+
+  border: 1px solid rgba(251, 191, 36, 0.4);
+
+  color: white;
+}
+
+.supreme-dashboard input:focus,
+.supreme-page input:focus,
+.supreme-dashboard select:focus,
+.supreme-page select:focus {
+  box-shadow:
+    0 0 15px rgba(251, 191, 36, 0.35);
+}
+
+.supreme-dashboard button,
+.supreme-page button {
+  background:
+    linear-gradient(
+      135deg,
+      #8b0000,
+      #b91c1c
+    );
+
+  color: white;
+
+  border: 1px solid #fbbf24;
+}
+
+.supreme-dashboard button:hover,
+.supreme-page button:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #b91c1c,
+      #dc2626
+    );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 15px rgba(220, 38, 38, 0.35);
+}
+
+.supreme-dashboard > div > div,
+.supreme-page > div,
+.supreme-page > div > div,
+.supreme-page > div > div > div {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(25, 25, 25, 0.95),
+      rgba(10, 10, 10, 0.95)
+    );
+
+  border-left: 6px solid #fbbf24;
+
+  border-radius: 16px;
+
+  padding: 22px;
+
+  margin-bottom: 20px;
+
+  transition: 0.25s;
+}
+
+.supreme-dashboard > div > div:hover,
+.supreme-page > div > div:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 0 20px rgba(251, 191, 36, 0.15);
 }
