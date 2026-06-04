@@ -3,10 +3,15 @@ import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
 import throneImage from "../Images/ThroneImage.png";
 
-function SuperUltraMegaVillainLord() {
+function SupremeVillainLord() {
   const { token, user } = useAuth();
 
   const [academyData, setAcademyData] = useState([]);
+  const [stats, setStats] = useState({
+    totalVillains: 0,
+    totalClasses: 0,
+    totalAssignments: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -19,7 +24,8 @@ function SuperUltraMegaVillainLord() {
           },
         });
 
-        setAcademyData(response.data);
+        setStats(response.data.stats);
+        setAcademyData(response.data.academyData);
         setLoading(false);
       } catch {
         setError("The throne room rejected your authority. Unacceptable.");
@@ -44,9 +50,9 @@ function SuperUltraMegaVillainLord() {
       className="supreme-page"
       style={{
         backgroundImage: `linear-gradient(
-      rgba(0,0,0,0.85),
-      rgba(0,0,0,0.92)
-    ), url(${throneImage})`,
+          rgba(0,0,0,0.78),
+          rgba(0,0,0,0.9)
+        ), url(${throneImage})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -61,6 +67,23 @@ function SuperUltraMegaVillainLord() {
         every villain, every class, and every assignment beneath your glorious
         rule.
       </p>
+
+      <section className="supreme-stats">
+        <div>
+          <h3>Total Villains</h3>
+          <p>{stats.totalVillains}</p>
+        </div>
+
+        <div>
+          <h3>Total Classes</h3>
+          <p>{stats.totalClasses}</p>
+        </div>
+
+        <div>
+          <h3>Total Assignments</h3>
+          <p>{stats.totalAssignments}</p>
+        </div>
+      </section>
 
       {error && <p>{error}</p>}
 
@@ -103,4 +126,4 @@ function SuperUltraMegaVillainLord() {
   );
 }
 
-export default SuperUltraMegaVillainLord;
+export default SupremeVillainLord;
