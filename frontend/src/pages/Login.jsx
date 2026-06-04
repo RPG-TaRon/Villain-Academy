@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../utils/api";
 import { useAuth } from "../context/useAuth";
+import baseImage from "../Images/BaseImage.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -37,7 +38,18 @@ function Login() {
   };
 
   return (
-    <main>
+    <main
+      style={{
+        backgroundImage: `linear-gradient(
+          rgba(0,0,0,0.65),
+          rgba(0,0,0,0.85)
+        ), url(${baseImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
+      }}
+    >
       <h1>Villain Login</h1>
 
       <form onSubmit={handleSubmit}>
@@ -63,7 +75,8 @@ function Login() {
       {error && <p>{error}</p>}
 
       <p>
-        Your criminal record is empty? How pathetic.<Link to="/register">Join the ranks of the evil</Link>
+        Your criminal record is empty? How pathetic.{" "}
+        <Link to="/register">Join the ranks of the evil</Link>
       </p>
     </main>
   );

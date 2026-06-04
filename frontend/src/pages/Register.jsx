@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../utils/api";
 import { useAuth } from "../context/useAuth";
+import baseImage from "../Images/BaseImage.png";
 
 function Register() {
   const navigate = useNavigate();
@@ -38,7 +39,18 @@ function Register() {
   };
 
   return (
-    <main>
+    <main
+      style={{
+        backgroundImage: `linear-gradient(
+          rgba(0,0,0,0.65),
+          rgba(0,0,0,0.85)
+        ), url(${baseImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
+      }}
+    >
       <h1>Enter the Villain Realm where we train you to be the worst!</h1>
 
       <form onSubmit={handleSubmit}>
@@ -72,7 +84,7 @@ function Register() {
       {error && <p>{error}</p>}
 
       <p>
-         Already a Villain in training? <Link to="/">Login</Link>
+        Already a Villain in training? <Link to="/">Login</Link>
       </p>
     </main>
   );
