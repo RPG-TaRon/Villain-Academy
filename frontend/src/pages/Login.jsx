@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../utils/api";
 import { useAuth } from "../context/useAuth";
 import baseImage from "../Images/BaseImage.png";
-
+//below is the Login page, which allows users to log in using their username or email and password. It also provides a link to the registration page for new users who want to join the villain academy.
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();

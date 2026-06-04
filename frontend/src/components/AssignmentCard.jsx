@@ -1,3 +1,5 @@
+
+// AssignmentCard component to display individual assignments in the admin dashboard
 function AssignmentCard({
   assignment,
   updateAssignmentStatus,

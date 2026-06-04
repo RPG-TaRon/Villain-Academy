@@ -7,7 +7,7 @@ const {
 } = require("../controllers/userController");
 
 const authMiddleware = require("../middleware/authMiddleware");
-
+//user routes
 router.post("/register", registerUser);
 
 router.post("/login", loginUser);

@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../utils/api";
 import { useAuth } from "../context/useAuth";
 import baseImage from "../Images/BaseImage.png";
-
+// below is the Register page, which allows new users to create an account by providing a username, email, and password. Upon successful registration, the user is automatically logged in and redirected to the dashboard.
 function Register() {
   const navigate = useNavigate();
   const { login } = useAuth();

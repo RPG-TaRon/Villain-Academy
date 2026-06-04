@@ -1,5 +1,5 @@
 const { Class } = require("../models");
-
+//class controller for instructors to create, read, update, and delete classes for their courses
 const createClass = async (req, res) => {
   try {
     const newClass = await Class.create({

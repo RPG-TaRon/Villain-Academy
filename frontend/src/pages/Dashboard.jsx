@@ -5,7 +5,7 @@ import { useAuth } from "../context/useAuth";
 import api from "../utils/api";
 import dashboardImage from "../Images/DashboardImage.png";
 import loginImage from "../Images/LogInImage.png";
-
+// below is the Dashboard page, which serves as the main hub for both admins and regular users to manage their classes. Admins have additional capabilities to create, update, and delete classes, while regular users can only view and create classes.
 function Dashboard() {
   const { user, token } = useAuth();
 

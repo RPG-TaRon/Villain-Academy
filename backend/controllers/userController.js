@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
-
+//function to create a token
 const createToken = (user) => {
   return jwt.sign(
     {
@@ -13,7 +13,7 @@ const createToken = (user) => {
     { expiresIn: "1d" }
   );
 };
-
+//function to register a user
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -42,7 +42,7 @@ const registerUser = async (req, res) => {
     });
   }
 };
-
+//function to login a user
 const loginUser = async (req, res) => {
   try {
     const { login, password } = req.body;
@@ -83,7 +83,7 @@ const loginUser = async (req, res) => {
     });
   }
 };
-
+//function to get the current user
 const getMe = async (req, res) => {
   res.json(req.user);
 };

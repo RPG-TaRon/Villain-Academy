@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-
+// ProtectedRoute component to protect routes that require authentication
 function ProtectedRoute({ children }) {
   const { token } = useAuth();
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+// below is the ClassCard component, which will be used to display individual classes in the admin dashboard, with options to edit or delete the class
 function ClassCard({
   classItem,
   editingClassId,

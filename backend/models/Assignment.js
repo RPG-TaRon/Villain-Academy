@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+// below is the schema for the assignment model, which will be used to create assignments for classes
 const assignmentSchema = new Schema(
   {
     title: {

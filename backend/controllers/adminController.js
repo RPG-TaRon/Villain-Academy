@@ -1,5 +1,5 @@
 const { User, Class, Assignment } = require("../models");
-
+//below is the admin controller for the supreme villain lord
 const getAcademyData = async (req, res) => {
   try {
     const users = await User.find().select("-password").lean();
@@ -42,7 +42,7 @@ const getAcademyData = async (req, res) => {
     });
   }
 };
-
+//admin functions to update and delete users, classes, and assignments.
 const updateUserByAdmin = async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(

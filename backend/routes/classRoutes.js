@@ -7,7 +7,7 @@ const {
   updateClass,
   deleteClass,
 } = require("../controllers/classController");
-
+//class routes
 const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/", authMiddleware, getClasses);

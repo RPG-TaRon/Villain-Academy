@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-
+// AdminRoute component to protect admin-only routes
 function AdminRoute({ children }) {
   const { user, token } = useAuth();
 

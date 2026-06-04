@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-
+// Navbar component to display navigation links based on user authentication status and role
 function Navbar() {
   const { user, logout } = useAuth();
 

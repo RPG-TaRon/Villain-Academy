@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+// below is the schema for the class model, which will be used to create classes for courses
 const classSchema = new Schema(
   {
     name: {

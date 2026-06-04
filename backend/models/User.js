@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-
+// below is the schema for the user model, which will be used to create users for the application
 const userSchema = new Schema(
   {
     username: {

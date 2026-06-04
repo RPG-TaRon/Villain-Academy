@@ -7,7 +7,7 @@ const {
   updateAssignment,
   deleteAssignment,
 } = require("../controllers/assignmentController");
-
+//assignment routes
 router.post("/class/:classId", authMiddleware, createAssignment);
 
 router.get("/class/:classId", authMiddleware, getAssignmentsByClass);

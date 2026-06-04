@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import AssignmentCard from "../components/AssignmentCard";
 import { useAuth } from "../context/useAuth";
 import api from "../utils/api";
-
+// below is the ClassDetails page, which displays details of a specific class, including its assignments, and allows admins to create, update, or delete assignments for that class
 function ClassDetails() {
   const { id } = useParams();
   const { token } = useAuth();

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AuthContext from "./authContext";
-
+// AuthProvider component to manage authentication state and provide login/logout functions
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(

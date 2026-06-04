@@ -1,3 +1,5 @@
+
+//function to connect to the database using mongoose
 const mongoose = require("mongoose");
 
 const connectDB = async () => {

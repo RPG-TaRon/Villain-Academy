@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import api from "../utils/api";
 import throneImage from "../Images/ThroneImage.png";
-
+// below is the SupremeVillainLord page, which serves as the ultimate admin dashboard for the villain academy. It allows the supreme villain lord to view all villains, classes, and assignments in the academy, as well as edit or delete any of them. This page is only accessible to users with supreme access (isAdmin: true).
 function SupremeVillainLord() {
   const { token, user } = useAuth();
 

@@ -1,5 +1,5 @@
 const { Class, Assignment } = require("../models");
-
+//assignment controller for instructors to create, read, update, and delete assignments for their classes
 const createAssignment = async (req, res) => {
   try {
     const foundClass = await Class.findOne({

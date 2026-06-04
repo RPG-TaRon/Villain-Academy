@@ -12,7 +12,7 @@ const {
 
 const authMiddleware = require("../middleware/authMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
-
+// below is the admin route for the supreme villain lord, which will allow them to manage users, classes, and assignments
 router.get("/academy", authMiddleware, adminMiddleware, getAcademyData);
 
 router.put(
