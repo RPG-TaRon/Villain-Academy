@@ -78,7 +78,7 @@ Regular villains can manage their own classes and assignments, while the Supreme
 ### Clone Repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/RPG-TaRon/Villain-Academy.git
 cd Villain-Academy
 ```
 
